@@ -1,0 +1,10 @@
+version: '3.9'
+services:
+  pso_python:
+    restart: always
+    build: .
+    container_name: 'pso_python'
+    working_dir: '/root/'
+    tty: true
+    volumes:
+      - ./opt:/root/opt
