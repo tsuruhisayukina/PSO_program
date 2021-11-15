@@ -13,6 +13,11 @@ F = f(X1, X2)
 fig = plt.figure()
 ax = fig.add_subplot(projection='3d')
 
+ax.set_xlabel('x1')
+ax.set_ylabel('x2')
+ax.set_zlabel('f(x1, x2)')
+ax.set_title('f(x1, x2)=x1**2+x2**2')
+
 ax.plot_wireframe(X1, X2, F)
 
 plt.savefig('3Dgraph.jpg')
