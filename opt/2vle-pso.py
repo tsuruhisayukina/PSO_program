@@ -128,7 +128,12 @@ for t in range(T):
     # print(min(personal_best_scores))
    
 # 最適解
+c21px = global_best_position["c21ix"] * global_best_position["alpx"]
+c12px = global_best_position["c12ix"] * global_best_position["alpx"]
+dE = (global_best_position["c21ix"] + global_best_position["c12ix"]) / 2
+
 print(system12)
 print(tdc)
-print(global_best_position)
+print("c21px   c12px   c21ix   c12ix   dE")
+print(str('{:.5f}'.format(c21px)) + '\t' + str('{:.5f}'.format(c12px)) + '\t' + str('{:.5f}'.format(global_best_position["c21ix"])) + '\t' + str('{:.5f}'.format(global_best_position["c12ix"])) + '\t' + str('{:.5f}'.format(dE)))
 print(min(personal_best_scores))
