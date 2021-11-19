@@ -2,7 +2,7 @@ import numpy as np
 import random
 
 # データの読み込み#####################################################
-expfile = open('expData/VLE_ACN-BZ_45.txt', 'r')
+expfile = open('expData/VLE_EOH-BZ_45.txt', 'r')
 datalist = expfile.readlines()
 
 system12 = datalist[0].rstrip('\n') # system12:系の名前
@@ -54,7 +54,7 @@ def update_position(c21ix, c12ix, alpx, c21iv, c12iv, alpv):
   return new_c21ix, new_c12ix, new_alpx
 
 # 粒子の速度の更新を行う関数
-def update_velocity(c21ix, c12ix, alpx, c21iv, c12iv, alpv, p, g, I, rho_max=0.5):
+def update_velocity(c21ix, c12ix, alpx, c21iv, c12iv, alpv, p, g, I, rho_max=0.14):
   # パラメーターrhoはランダムに与える
   rho1 = random.uniform(0, rho_max)
   rho2 = random.uniform(0, rho_max)
@@ -65,9 +65,9 @@ def update_velocity(c21ix, c12ix, alpx, c21iv, c12iv, alpv, p, g, I, rho_max=0.5
   return new_c21iv, new_c12iv, new_alpv
 
 N = 250  # 粒子の数
-c21ix_min, c21ix_max = 0, 2
-c12ix_min, c12ix_max = 0, 2
-alpx_min, alpx_max = 0, 2
+c21ix_min, c21ix_max = -2, 2
+c12ix_min, c12ix_max = -2, 2
+alpx_min, alpx_max = -2, 2
 
 # 粒子位置, 速度, パーソナルベスト, グローバルベストの初期化を行う
 ps = [{"c21ix": random.uniform(c21ix_min, c21ix_max), "c12ix": random.uniform(c12ix_min, c12ix_max), "alpx": random.uniform(alpx_min, alpx_max)} for i in range(N)]
@@ -132,8 +132,16 @@ c21px = global_best_position["c21ix"] * global_best_position["alpx"]
 c12px = global_best_position["c12ix"] * global_best_position["alpx"]
 dE = (global_best_position["c21ix"] + global_best_position["c12ix"]) / 2
 
-print(system12)
-print(tdc)
-print("c21px   c12px   c21ix   c12ix   dE")
-print(str('{:.5f}'.format(c21px)) + '\t' + str('{:.5f}'.format(c12px)) + '\t' + str('{:.5f}'.format(global_best_position["c21ix"])) + '\t' + str('{:.5f}'.format(global_best_position["c12ix"])) + '\t' + str('{:.5f}'.format(dE)))
-print(min(personal_best_scores))
+# print(system12)
+# print(tdc)
+# print("c21px   c12px   c21ix   c12ix   dE")
+# print(str('{:.5f}'.format(c21px)) + '\t' + str('{:.5f}'.format(c12px)) + '\t' + str('{:.5f}'.format(global_best_position["c21ix"])) + '\t' + str('{:.5f}'.format(global_best_position["c12ix"])) + '\t' + str('{:.5f}'.format(dE)))
+# print(min(personal_best_scores))
+
+resultfile = open('result/%s.txt' % (system12), 'w')
+resultfile.write(system12 + '\n')
+resultfile.write(str(tdc) + '\n')
+resultfile.write("c21px   c12px   c21ix   c12ix   dE" + '\n')
+resultfile.write(str('{:.5f}'.format(c21px)) + '\t' + str('{:.5f}'.format(c12px)) + '\t' + str('{:.5f}'.format(global_best_position["c21ix"])) + '\t' + str('{:.5f}'.format(global_best_position["c12ix"])) + '\t' + str('{:.5f}'.format(dE)) + '\n')
+resultfile.write(str(min(personal_best_scores)))
+resultfile.close()
